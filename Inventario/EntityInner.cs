@@ -17,6 +17,7 @@ namespace Inventario
     {
         private string _filtering="";
         DevExpress.Data.PLinq.PLinqInstantFeedbackSource _nerePLinkiu;
+        public event EventHandler<MyArguments> innerEventHandler;
 
         public EntityInner()
         {
@@ -89,6 +90,18 @@ namespace Inventario
             gridControl1.DataSource = null;
             _filtering = "ATALLU";
             gridControl1.DataSource = _nerePLinkiu;
+        }
+
+        private void gridView1_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            int cod_lote = Convert.ToInt32(gridView1.GetFocusedRowCellValue("COD_LOTE").ToString());
+            string lote = gridView1.GetFocusedRowCellValue("LOTE").ToString();
+
+            MyArguments args = new MyArguments();
+            args.MyVal1 = cod_lote;
+            args.MyVal2 = lote;
+
+            innerEventHandler?.Invoke(null, args);
         }
     }
 }

@@ -88,6 +88,7 @@ namespace Inventario
             if (isFormOpen == false)
             {
                 _frmInner = new EntityInner();
+                _frmInner.innerEventHandler += _frmInner_innerEventHandler;
                 _frmInner.Show();
                 _frmInner.FormClosing += CloseHandler;
             }
@@ -95,6 +96,10 @@ namespace Inventario
                
         }
 
+        private void _frmInner_innerEventHandler(object sender, MyArguments e)
+        {
+            label1.Text = "inner gridean aukeratua: " + e.MyVal1 + " eta " + e.MyVal2;
+        }
 
         private bool IsAlreadyOpen(Type formType)
 
@@ -131,6 +136,18 @@ namespace Inventario
         {
             if(_frmInner!=null)
                 _frmInner.filterInner("ATALLU");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (_frmInner != null)
+                _frmInner.filterInner("TECNICHAPA");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (_frmInner != null)
+                _frmInner.filterInner("ARCELOR");
         }
     }
 }
