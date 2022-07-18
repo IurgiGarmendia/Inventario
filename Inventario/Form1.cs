@@ -13,6 +13,8 @@ namespace Inventario
     public partial class Form1 : Form
     {
         EntityInner _frmInner = null;
+        Frmbigarrena _frmBigarrena = null;
+        FrmKonparaketa _frmKonparaketa = null;
         public Form1()
         {
             InitializeComponent();
@@ -93,12 +95,22 @@ namespace Inventario
                 _frmInner.FormClosing += CloseHandler;
             }
 
-               
+            isFormOpen = IsAlreadyOpen(typeof(Frmbigarrena));
+            if (isFormOpen == false)
+            {
+                _frmBigarrena = new Frmbigarrena();
+                _frmBigarrena.Show();
+                _frmBigarrena.FormClosing += CloseHandler;
+            }
+
+            
         }
 
         private void _frmInner_innerEventHandler(object sender, MyArguments e)
         {
             label1.Text = "inner gridean aukeratua: " + e.MyVal1 + " eta " + e.MyVal2;
+            if(_frmBigarrena!=null)
+                _frmBigarrena.labelEguneratu(e);
         }
 
         private bool IsAlreadyOpen(Type formType)
@@ -148,6 +160,18 @@ namespace Inventario
         {
             if (_frmInner != null)
                 _frmInner.filterInner("ARCELOR");
+        }
+
+        private void barButtonItem6_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            bool isFormOpen = IsAlreadyOpen(typeof(FrmKonparaketa));
+            if (isFormOpen == false)
+            {
+                _frmKonparaketa = new FrmKonparaketa();
+
+                _frmKonparaketa.Show();
+                _frmKonparaketa.FormClosing += CloseHandler;
+            }
         }
     }
 }

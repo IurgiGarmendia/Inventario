@@ -102,6 +102,20 @@ namespace Inventario
             args.MyVal2 = lote;
 
             innerEventHandler?.Invoke(null, args);
+            //innerEventHandler?.BeginInvoke(null, args, null, null);
+
+            System.Windows.Forms.MessageBox.Show(cod_lote + ", " + lote  );
+        }
+
+        private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
+        {
+            //con pLinqInstantFeedbackSource no es editable
+            int cod_lote = Convert.ToInt32(gridView1.GetFocusedRowCellValue("COD_LOTE").ToString());
+            string lote = gridView1.GetFocusedRowCellValue("LOTE").ToString();
+            string codAlmacen = gridView1.GetFocusedRowCellValue("COALMACEN").ToString();
+
+            System.Windows.Forms.MessageBox.Show(cod_lote+", "+lote+", "+codAlmacen);
+
         }
     }
 }
