@@ -61,6 +61,45 @@ namespace Inventario
             List<JoinKlas> listLotes=await GetLotesAsync(filter);
             gridControl1.DataSource = listLotes;
         }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            string filter = "TECNICHAPA";
+            List<JoinKlas> listLotes = await GetLotesAsync(filter);
+            gridControl1.DataSource = listLotes;
+        }
+
+        private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
+        {
+            //con pLinqInstantFeedbackSource no es editable
+            int cod_lote = Convert.ToInt32(gridView1.GetFocusedRowCellValue("COD_LOTE").ToString());
+            string lote = gridView1.GetFocusedRowCellValue("LOTE").ToString();
+            string codAlmacen = gridView1.GetFocusedRowCellValue("CODALMACEN").ToString();
+            System.Windows.Forms.MessageBox.Show(cod_lote + ", " + lote + ", " + codAlmacen);
+            using (var db = new QueryInner())
+            {
+                //var result = db.DBLotes.FirstOrDefault(b => b.COD_LOTE == cod_lote);
+                //if (result != null)
+                //{
+                //    result.CODALMACEN = codAlmacen;
+                //    db.SaveChanges();
+                //}
+
+
+                var query = (from s in db.DBLotes
+                               where s.COD_LOTE == cod_lote
+                               select s);
+
+                foreach(LOTES lotesUpdatatzeko in query)
+                {
+                    lotesUpdatatzeko.CODALMACEN = codAlmacen;
+                    db.SaveChanges();
+                }
+
+            }
+
+            
+        }
     }
 
     public class JoinKlas
